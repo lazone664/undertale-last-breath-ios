@@ -116,18 +116,27 @@ class GameEngine {
     const actionButtons = document.querySelectorAll('.action-buttons .vbtn');
 
     const updateDpadTouch = (touch) => {
-      const el = document.elementFromPoint(touch.clientX, touch.clientY);
-      const targetBtn = el ? el.closest('.vbtn') : null;
-      dpadButtons.forEach(btn => {
-        const kc = btn.getAttribute('data-key');
-        if (btn === targetBtn) {
-          this.keys[kc] = true;
-          btn.classList.add('pressed');
-        } else {
-          this.keys[kc] = false;
-          btn.classList.remove('pressed');
-        }
-      });
+      const rect = dpad.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = touch.clientX - cx;
+      const dy = touch.clientY - cy;
+      const deadzone = 12;
+
+      const left = dx < -deadzone;
+      const right = dx > deadzone;
+      const up = dy < -deadzone;
+      const down = dy > deadzone;
+
+      this.keys['ArrowLeft'] = left;
+      this.keys['ArrowRight'] = right;
+      this.keys['ArrowUp'] = up;
+      this.keys['ArrowDown'] = down;
+
+      document.getElementById('vbtnLeft')?.classList.toggle('pressed', left);
+      document.getElementById('vbtnRight')?.classList.toggle('pressed', right);
+      document.getElementById('vbtnUp')?.classList.toggle('pressed', up);
+      document.getElementById('vbtnDown')?.classList.toggle('pressed', down);
     };
 
     if (dpad) {
