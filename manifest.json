@@ -1,0 +1,9 @@
+{
+  "name": "Undertale Last Breath: Resurrection",
+  "short_name": "Last Breath",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#000000",
+  "theme_color": "#000000"
+}

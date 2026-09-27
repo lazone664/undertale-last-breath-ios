@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Undertale Last Breath - All In One</title>
+  
+  <!-- iOS PWA / WebApp Optimization -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Last Breath">
+  <meta name="theme-color" content="#000000">
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- All In One Menu Hub -->
+  <div id="hub-screen" class="hub-container">
+    <div class="hub-header">
+      <h1 class="hub-title">UNDERTALE</h1>
+      <h2 class="hub-subtitle">LAST BREATH : ALL-IN-ONE</h2>
+      <p class="hub-desc">Toutes les phases et modes réunis en 1 seule application pour ton iPhone X</p>
+    </div>
+
+    <div class="hub-grid">
+      <!-- Card 1: Phase 1 & 2 -->
+      <a href="ulb_p1.html" class="game-card" style="text-decoration: none; color: inherit;">
+        <div class="card-icon">💀</div>
+        <div class="card-info">
+          <h3>Phase 1 & 2 : Combat Original</h3>
+          <p>Sans normal et blessé • "Not A Slacker Anymore" & "The Slaughter Continues"</p>
+          <span class="badge badge-popular">+550k Joueurs</span>
+        </div>
+        <div class="card-arrow">▶</div>
+      </a>
+
+      <!-- Card 2: Phase 3 -->
+      <a href="ulb_p3.html" class="game-card" style="text-decoration: none; color: inherit;">
+        <div class="card-icon">✋</div>
+        <div class="card-info">
+          <h3>Phase 3 : Gaster Encounter</h3>
+          <p>Sans bloquant avec la main de Gaster • "An Enigmatic Encounter"</p>
+          <span class="badge badge-boss">Combat Boss</span>
+        </div>
+        <div class="card-arrow">▶</div>
+      </a>
+
+      <!-- Card 3: Simulator -->
+      <a href="ulb_sim.html" class="game-card" style="text-decoration: none; color: inherit;">
+        <div class="card-icon">⚡</div>
+        <div class="card-info">
+          <h3>Last Breath Simulator</h3>
+          <p>Entraînement libre, sélection d'attaques et de patterns</p>
+          <span class="badge badge-sim">Entraînement</span>
+        </div>
+        <div class="card-arrow">▶</div>
+      </a>
+
+      <!-- Card 4: Resurrection Canvas Engine -->
+      <div class="game-card" onclick="launchResurrection()">
+        <div class="card-icon">🔥</div>
+        <div class="card-info">
+          <h3>Resurrection (Moteur Canvas)</h3>
+          <p>Le mode avec les vraies musiques et bruitages originaux extraits</p>
+          <span class="badge badge-rez">Audio Réel</span>
+        </div>
+        <div class="card-arrow">▶</div>
+      </div>
+    </div>
+
+    <div class="hub-footer">
+      <p>💡 <strong>Pour jouer en cours :</strong> Appuie sur Partager <span style="font-size:16px;">⎋</span> > <strong>« Sur l'écran d'accueil »</strong> pour l'avoir en icône d'application autonome sur ton iPhone X !</p>
+    </div>
+  </div>
+
+  <!-- In-App Game Player (Seamless Fullscreen) -->
+  <div id="player-screen" class="player-container" style="display: none;">
+    <!-- Top Bar with Back Button -->
+    <div class="player-topbar">
+      <button class="btn-back" onclick="closeGame()">◀ MENU</button>
+      <span id="current-game-title" class="player-title">Undertale Last Breath</span>
+      <button class="btn-reload" onclick="reloadCurrentGame()">⟳ RECHARGER</button>
+    </div>
+
+    <!-- IFrame container for TurboWarp games -->
+    <div id="iframe-wrapper" class="game-wrapper"></div>
+
+    <!-- Native Canvas container for Resurrection -->
+    <div id="canvas-wrapper" class="game-wrapper" style="display: none;">
+      <canvas id="gameCanvas" width="640" height="480"></canvas>
+      
+      <!-- Virtual Mobile Touch Controls -->
+      <div id="touch-controls">
+        <div id="dpad" class="touch-pad">
+          <div id="btn-up" class="dpad-btn up">▲</div>
+          <div id="btn-left" class="dpad-btn left">◀</div>
+          <div id="btn-center" class="dpad-center"></div>
+          <div id="btn-right" class="dpad-btn right">▶</div>
+          <div id="btn-down" class="dpad-btn down">▼</div>
+        </div>
+        <div id="action-buttons">
+          <button id="btn-z" class="act-btn z-btn">
+            <span class="btn-label">Z</span>
+            <span class="btn-sub">SAUT / OK</span>
+          </button>
+          <button id="btn-x" class="act-btn x-btn">
+            <span class="btn-label">X</span>
+            <span class="btn-sub">ANNULER</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="hub.js"></script>
+</body>
+</html>
