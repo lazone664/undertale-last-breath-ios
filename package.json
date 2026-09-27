@@ -1,0 +1,27 @@
+{
+  "name": "undertale-last-breath",
+  "version": "1.0.0",
+  "description": "Undertale Last Breath - iOS / Mobile Port",
+  "private": true,
+  "scripts": {
+    "build": "python build_web.py",
+    "cap:add:ios": "npx @capacitor/cli add ios",
+    "cap:sync": "npm run build && npx @capacitor/cli sync ios",
+    "cap:open": "npx @capacitor/cli open ios"
+  },
+  "dependencies": {
+    "@capacitor/core": "^6.2.0",
+    "@capacitor/ios": "^6.2.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.2.0"
+  },
+  "keywords": [
+    "undertale",
+    "last-breath",
+    "ios",
+    "game"
+  ],
+  "author": "",
+  "license": "ISC"
+}

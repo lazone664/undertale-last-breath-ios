@@ -1,0 +1,16 @@
+{
+  "appId": "com.mieuhaw.lastbreath",
+  "appName": "Last Breath",
+  "webDir": "www",
+  "backgroundColor": "#0a0a12",
+  "server": {
+    "iosScheme": "capacitor"
+  },
+  "ios": {
+    "contentInset": "automatic",
+    "scrollEnabled": false,
+    "allowsLinkPreview": false,
+    "preferredContentMode": "mobile",
+    "backgroundColor": "#0a0a12"
+  }
+}

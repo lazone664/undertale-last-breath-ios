@@ -1,0 +1,36 @@
+# Node
+node_modules/
+npm-debug.log
+
+# Build outputs
+build/
+dist/
+www/
+*.ipa
+*.zip
+*.token
+push_*.py
+
+# Windows game executables and data files
+UNDERTALE.exe
+audiogroup1.dat
+data.win
+Final_Cut0.mp4
+extracted_audio/
+extracted_textures/
+
+# iOS CocoaPods & DerivedData
+ios/App/Pods/
+ios/App/Podfile.lock
+ios/App/App.xcworkspace/xcuserdata/
+ios/App/App.xcodeproj/project.xcworkspace/xcuserdata/
+ios/App/App.xcodeproj/xcuserdata/
+*.mode1v3
+*.mode2v3
+*.nocache
+*.perspectivev3
+*.pbxuser
+
+# OS
+.DS_Store
+Thumbs.db

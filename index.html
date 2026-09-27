@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>UNDERTALE: LAST BREATH — The Final Judgment (Fangame)</title>
+  <meta name="description" content="Fangame Undertale inspiré de Last Breath. Affrontez Sans à travers 3 phases épiques avec mécaniques de gravité, Gaster Blasters et système de parade.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Last Breath">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0a0a12">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/icon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="assets/icon/favicon.png">
+  <link rel="stylesheet" href="style.css?v=11">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="stars-bg"></div>
+  <div class="crt-overlay" id="crtOverlay"></div>
+
+  <!-- Main layout -->
+  <div class="game-layout">
+
+    <!-- ── Header ── -->
+    <header class="game-header">
+      <div class="header-left">
+        <h1 class="game-title">UNDERTALE: <span class="highlight-title">LAST BREATH</span></h1>
+        <span class="game-subtitle">FAN-BATTLE ENGINE</span>
+      </div>
+      <div class="header-controls">
+        <button class="nav-btn" id="btnPhaseSelector" title="Choisir la Phase">⚙️ PHASES</button>
+        <button class="nav-btn" id="btnSettings"      title="Paramètres">🔧 OPTIONS</button>
+        <button class="nav-btn" id="btnHelp"          title="Commandes">❓ AIDE</button>
+        <button class="nav-btn sound-toggle" id="btnMute" title="Son">🔊 SON</button>
+        <button class="nav-btn" id="btnFullscreen"    title="Plein écran">⛶ PLEIN ÉCRAN</button>
+      </div>
+    </header>
+
+    <!-- ── Game Canvas ── -->
+    <main class="game-viewport-container">
+      <div class="game-frame">
+        <canvas id="gameCanvas" width="640" height="480"></canvas>
+
+        <!-- Virtual d-pad (touch / mouse) -->
+        <div class="virtual-controls" id="virtualControls">
+          <div class="dpad">
+            <button class="vbtn vbtn-up"    data-key="ArrowUp"    id="vbtnUp">▲</button>
+            <div class="dpad-middle">
+              <button class="vbtn vbtn-left"  data-key="ArrowLeft"  id="vbtnLeft">◀</button>
+              <div class="dpad-center"></div>
+              <button class="vbtn vbtn-right" data-key="ArrowRight" id="vbtnRight">▶</button>
+            </div>
+            <button class="vbtn vbtn-down"  data-key="ArrowDown"  id="vbtnDown">▼</button>
+          </div>
+          <div class="action-buttons">
+            <button class="vbtn vbtn-action vbtn-z" data-key="KeyZ" id="vbtnZ">Z<span>CONFIRM / PARRY</span></button>
+            <button class="vbtn vbtn-action vbtn-x" data-key="KeyX" id="vbtnX">X<span>CANCEL / FOCUS</span></button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ── Footer ── -->
+    <footer class="game-footer">
+      <div class="controls-legend">
+        <span><kbd>▲ ▼ ◀ ▶</kbd> ou <kbd>WASD</kbd> : Déplacer l'Âme</span>
+        <span><kbd>Z</kbd> ou <kbd>Entrée</kbd> : Valider / Attaquer / <strong>PARADE</strong></span>
+        <span><kbd>X</kbd> ou <kbd>Shift</kbd> : Annuler / Focus</span>
+        <span><kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> : Sauter à une phase</span>
+      </div>
+    </footer>
+
+  </div><!-- /game-layout -->
+
+  <!-- ═══════════════════════════ MODALS ═══════════════════════════ -->
+
+  <!-- Phase Selector -->
+  <div class="modal-backdrop" id="modalPhases">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>CHOISIR UNE PHASE</h2>
+        <button class="modal-close" id="btnClosePhases">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="phase-card active" data-phase="1">
+          <div class="phase-badge">PHASE 1</div>
+          <div class="phase-info">
+            <h3>The Slaughter Continues</h3>
+            <p>Sans vous attend dans le Couloir du Jugement. Gravité inversée, os rapides et Gaster Blasters initiaux.</p>
+          </div>
+          <button class="phase-play-btn" data-phase="1">JOUER</button>
+        </div>
+        <div class="phase-card" data-phase="2">
+          <div class="phase-badge phase-2">PHASE 2</div>
+          <div class="phase-info">
+            <h3>Unyielding Determination</h3>
+            <p>Sans refuse de mourir ! Il brandit son os géant, manipule l'arène et exige des parades parfaites.</p>
+          </div>
+          <button class="phase-play-btn" data-phase="2">JOUER</button>
+        </div>
+        <div class="phase-card" data-phase="3">
+          <div class="phase-badge phase-3">PHASE 3</div>
+          <div class="phase-info">
+            <h3>An Enigmatic Encounter</h3>
+            <p>W.D. Gaster intervient directement. L'univers se déforme, des mains spectrales orbitent autour de Sans.</p>
+          </div>
+          <button class="phase-play-btn" data-phase="3">JOUER</button>
+        </div>
+        <div class="phase-card survival" data-phase="survival">
+          <div class="phase-badge phase-survival">SURVIE</div>
+          <div class="phase-info">
+            <h3>Boss Rush Infini</h3>
+            <p>Enchaînez toutes les attaques des trois phases sans interruption pour le score de survie ultime.</p>
+          </div>
+          <button class="phase-play-btn" data-phase="survival">DÉFI</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Settings -->
+  <div class="modal-backdrop" id="modalSettings">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>OPTIONS DU JEU</h2>
+        <button class="modal-close" id="btnCloseSettings">&times;</button>
+      </div>
+      <div class="modal-body settings-grid">
+        <div class="setting-item">
+          <label for="sliderBgm">Volume Musique</label>
+          <input type="range" id="sliderBgm" min="0" max="100" value="70">
+        </div>
+        <div class="setting-item">
+          <label for="sliderSfx">Volume Effets (SFX)</label>
+          <input type="range" id="sliderSfx" min="0" max="100" value="85">
+        </div>
+        <div class="setting-item checkbox-item">
+          <input type="checkbox" id="chkCrt" checked>
+          <label for="chkCrt">Filtre CRT Vintage (Lignes de balayage)</label>
+        </div>
+        <div class="setting-item checkbox-item">
+          <input type="checkbox" id="chkHitboxes">
+          <label for="chkHitboxes">Afficher les Hitboxes (Mode Entraînement)</label>
+        </div>
+        <div class="setting-item checkbox-item">
+          <input type="checkbox" id="chkTouch">
+          <label for="chkTouch">Commandes tactiles à l'écran</label>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help / Lore -->
+  <div class="modal-backdrop" id="modalHelp">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>LORE &amp; GUIDE DU COMBAT</h2>
+        <button class="modal-close" id="btnCloseHelp">&times;</button>
+      </div>
+      <div class="modal-body lore-content">
+        <h3>🦴 Le Secret de Last Breath</h3>
+        <p>Après <strong>30 génocides consécutifs</strong>, W.D. Gaster a révélé à Sans la vérité sur vos réinitialisations. Fort de ce savoir et d'une détermination renouvelée, Sans ne laissera plus son univers être anéanti.</p>
+
+        <h3>❤️ Mécaniques Spéciales</h3>
+        <ul>
+          <li><strong>Âme Bleue :</strong> La gravité vous attire contre un mur. Utilisez la direction opposée pour sauter.</li>
+          <li><strong>Os Bleus :</strong> Restez <em>parfaitement immobile</em> pour traverser ces os sans dégât.</li>
+          <li><strong>Os Oranges :</strong> Vous devez <em>être en mouvement</em> pour traverser ces os.</li>
+          <li><strong>Parade (Phase 2 &amp; 3) :</strong> Appuyez <kbd>Z</kbd> au bon moment sur les os parables (brillants) pour les dévier !</li>
+          <li><strong>KR (Karma) :</strong> Vos PV s'égouttent si votre barre KR est remplie. Utilisez des objets pour récupérer.</li>
+          <li><strong>Focus :</strong> Maintenez <kbd>X</kbd> pour ralentir l'âme et esquiver avec précision.</li>
+        </ul>
+
+        <h3>⚔️ Phases</h3>
+        <ul>
+          <li><strong>Phase 1 – The Slaughter Continues :</strong> Sans en pleine forme, attaques rapides.</li>
+          <li><strong>Phase 2 – Unyielding Determination :</strong> Sans à demi-mort mais plus agressif, boîte rotative.</li>
+          <li><strong>Phase 3 – An Enigmatic Encounter :</strong> Gaster amplifie Sans, gravité chaotique, os violets homing.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Scripts (load order matters) ── -->
+  <script src="js/audio.js?v=10"></script>
+  <script src="js/sprites.js?v=10"></script>
+  <script src="js/player.js?v=10"></script>
+  <script src="js/sans.js?v=10"></script>
+  <script src="js/attacks.js?v=10"></script>
+  <script src="js/game.js?v=10"></script>
+</body>
+</html>
